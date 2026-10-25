@@ -1,0 +1,127 @@
+/* Every colour, size, radius and timing in the UI comes from here; a theme
+   is another set of these values. */
+
+:root {
+  color-scheme: dark;
+
+  --c-bg: #111317;
+  --c-surface: #1a1d23;
+  --c-surface-2: #23262d;
+  --c-surface-3: #2f3440;
+  --c-surface-hover: #3a3f4a;
+  --c-line: #2a2e36;
+  --c-scrim: rgb(0 0 0 / 0.6);
+
+  /* The terminal: what xterm draws with, and the previews of it. A theme
+     sets these only while the terminal follows it (data-terminal="theme");
+     the ANSI colours are xterm's own unless a theme sets them. */
+  --c-terminal: #000000;
+  --c-terminal-text: #e6e8ec;
+  --c-terminal-cursor: #e6e8ec;
+  --c-terminal-selection: rgb(157 182 255 / 0.35);
+
+  --c-text: #e6e8ec;
+  --c-text-soft: #c9ced6;
+  --c-text-muted: #9aa1ad;
+  --c-text-faint: #5d6470;
+
+  --c-accent: #3b63e6;
+  --c-accent-hover: #4a70ec;
+  --c-on-accent: #ffffff;
+  --c-accent-text: #9db6ff;
+  --c-accent-soft: #1d2a4d;
+
+  --c-ok: #3ecf8e;
+  --c-ok-soft: #14281f;
+  --c-ok-text: #7ee2b0;
+  --c-warn: #f0b429;
+  --c-warn-soft: #2a2210;
+  --c-danger: #c62f2f;
+  --c-danger-hover: #d63c3c;
+  --c-danger-text: #ff8a80;
+  --c-danger-soft: #3a1d1d;
+  --c-lock: #e0803a;
+  --c-merged: #c4b5fd;
+  --c-merged-soft: #2a2140;
+
+  --c-folder: #e3b341;
+  /* A file's icon by its type; each theme's colours carry over. */
+  --c-file-image: var(--c-syn-title);
+  --c-file-media: var(--c-lock);
+  --c-file-archive: var(--c-syn-meta);
+  --c-file-pdf: var(--c-danger-text);
+  --c-file-document: var(--c-syn-number);
+  --c-file-sheet: var(--c-syn-attr);
+  --c-file-code: var(--c-accent-text);
+  --c-file-plain: var(--c-text-muted);
+  --c-web-page: #ffffff;
+  --c-code-bg: #000000;
+  --c-code: #d6dae0;
+  --c-syn-keyword: #ff7b72;
+  --c-syn-string: #a5d6ff;
+  --c-syn-comment: #8b929e;
+  --c-syn-number: #79c0ff;
+  --c-syn-title: #d2a8ff;
+  --c-syn-attr: #7ee787;
+  --c-syn-meta: #ffa657;
+
+  --c-add: #3ecf8e;
+  --c-add-soft: #10261b;
+  --c-del: #ff7b72;
+  --c-del-soft: #2e1618;
+
+  /* Disabled is its own pair, never an opacity. */
+  --c-disabled-bg: #1e2127;
+  --c-disabled-text: #5d6470;
+
+  /* Below 16px, hierarchy comes from weight and colour. */
+  --font-ui: -apple-system, system-ui, sans-serif;
+  --font-mono: ui-monospace, Menlo, monospace;
+  /* The terminal's type: plain mono unless the terminal follows a theme. A
+     face that draws small is scaled up from the size the phone chose. */
+  --font-terminal: ui-monospace, Menlo, monospace;
+  --font-terminal-scale: 1;
+  --fs-xs: 11px;
+  --fs-sm: 12px;
+  --fs-md: 13px;
+  --fs-base: 14px;
+  --fs-lg: 15px;
+  --fs-xl: 16px;
+  --fs-2xl: 17px;
+  --fs-3xl: 30px;
+
+  /* Icons in the section tabs; a theme with a wide face hides them. */
+  --section-icons: inline;
+
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-8: 32px;
+
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 10px;
+  --r-xl: 14px;
+  --r-2xl: 18px;
+  --r-pill: 999px;
+
+  /* The phone's notch and home bar. Zero inside a frame that already
+     keeps clear of them (the Game Boy shell). */
+  --safe-top: env(safe-area-inset-top);
+  --safe-bottom: env(safe-area-inset-bottom);
+
+  --tap: 44px;
+  --key: 40px;
+
+  --t-hover: 80ms;
+  --t-enter: 180ms;
+  --t-exit: 120ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Elevation: hairline ring folded in, tinted to the surfaces. */
+  --shadow-sheet: 0 0 0 1px var(--c-line), 0 -8px 24px rgb(5 8 20 / 0.45), 0 -2px 6px rgb(5 8 20 / 0.35);
+  --shadow-dialog: 0 0 0 1px var(--c-surface-3), 0 20px 50px rgb(5 8 20 / 0.55), 0 4px 12px rgb(5 8 20 / 0.4);
+}

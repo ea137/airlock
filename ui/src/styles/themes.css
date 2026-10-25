@@ -1,0 +1,639 @@
+/* Moving decorations live in lib/ThemeLayer.svelte and
+   run only with data-motion="on"; the Game Boy's case is
+   lib/GameBoyShell.svelte. Fonts are bundled: the CSP
+   serves fonts from this origin only. */
+
+@import '@fontsource/share-tech-mono/latin-400.css';
+@import '@fontsource/press-start-2p/latin-400.css';
+@import '@fontsource/vt323/latin-400.css';
+@import '@fontsource/ibm-plex-sans/latin-400.css';
+@import '@fontsource/ibm-plex-sans/latin-600.css';
+@import '@fontsource/ibm-plex-mono/latin-400.css';
+@import '@fontsource/major-mono-display/latin-400.css';
+@import '@fontsource/fira-code/latin-400.css';
+@import '@fontsource/fira-code/latin-700.css';
+@import '@fontsource/archivo/latin-400.css';
+@import '@fontsource/archivo/latin-700.css';
+
+:root[data-theme='matrix'],
+:root[data-theme='boot'],
+:root[data-theme='teletext'],
+:root[data-theme='gameboy'],
+:root[data-theme='workstation'],
+:root[data-theme='vector'],
+:root[data-theme='hacker'] {
+  --r-sm: 0;
+  --r-md: 0;
+  --r-lg: 0;
+  --r-xl: 0;
+  --r-2xl: 0;
+  --r-pill: 0;
+}
+
+:root[data-theme='matrix'] {
+  --c-bg: #000000;
+  --c-surface: rgb(0 10 3 / 0.9);
+  --c-surface-2: #04200b;
+  --c-surface-3: #073314;
+  --c-surface-hover: #0b4a1d;
+  --c-line: #0a6b25;
+  --c-text: #00ff41;
+  --c-text-soft: #7dffa0;
+  --c-text-muted: #00b32c;
+  --c-text-faint: #0a6b25;
+  --c-accent: #00ff41;
+  --c-accent-hover: #5dff85;
+  --c-on-accent: #000000;
+  --c-accent-text: #00ff41;
+  --c-accent-soft: #002b0c;
+  --c-ok: #00ff41;
+  --c-ok-soft: #002b0c;
+  --c-ok-text: #7dffa0;
+  --c-warn: #e8ff3d;
+  --c-warn-soft: #1d2400;
+  --c-folder: #00ff41;
+  --c-code-bg: #000000;
+  --c-code: #7dffa0;
+  --c-syn-keyword: #00ff41;
+  --c-syn-string: #b8ffcb;
+  --c-syn-comment: #1fae47;
+  --c-syn-number: #5dff85;
+  --c-syn-title: #e6ffec;
+  --c-syn-attr: #9dff57;
+  --c-syn-meta: #c8ff9e;
+  --font-ui: 'Share Tech Mono', ui-monospace, monospace;
+  --font-mono: 'Share Tech Mono', ui-monospace, monospace;
+  --shadow-sheet: 0 0 0 1px #00ff41, 0 0 14px rgb(0 255 65 / 0.3);
+  --shadow-dialog: 0 0 0 1px #00ff41, 0 0 24px rgb(0 255 65 / 0.35);
+}
+:root[data-theme='matrix'] h1,
+:root[data-theme='matrix'] h2 {
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px rgb(0 255 65 / 0.7);
+}
+:root[data-theme='matrix'] .btn--primary {
+  box-shadow: 0 0 18px rgb(0 255 65 / 0.55);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+:root[data-theme='boot'] {
+  --c-boot-border: #7869c4;
+  --c-bg: #40318d;
+  --c-surface: #4b3c9c;
+  --c-surface-2: #5747ab;
+  --c-surface-3: #6455bb;
+  --c-surface-hover: #7869c4;
+  --c-line: #7869c4;
+  --c-text: #a99ff5;
+  --c-text-soft: #c7c0ff;
+  --c-text-muted: #8a80d8;
+  --c-text-faint: #6c61b8;
+  --c-accent: #a99ff5;
+  --c-accent-hover: #c7c0ff;
+  --c-on-accent: #40318d;
+  --c-accent-text: #ffffff;
+  --c-accent-soft: #5747ab;
+  --c-folder: #ffffff;
+  --c-code-bg: #352879;
+  --c-code: #a99ff5;
+  --c-syn-keyword: #ffffff;
+  --c-syn-string: #9ad284;
+  --c-syn-comment: #8a80d8;
+  --c-syn-number: #edf171;
+  --c-syn-title: #c7c0ff;
+  --c-syn-attr: #8fe3ef;
+  --c-syn-meta: #e0705f;
+  --font-ui: 'Press Start 2P', ui-monospace, monospace;
+  --font-mono: 'Press Start 2P', ui-monospace, monospace;
+  --section-icons: none;
+  --fs-xs: 8px;
+  --fs-sm: 9px;
+  --fs-md: 10px;
+  --fs-base: 11px;
+  --fs-lg: 11px;
+  --fs-xl: 12px;
+  --fs-2xl: 13px;
+  --fs-3xl: 20px;
+}
+:root[data-theme='boot'] h1,
+:root[data-theme='boot'] h2 {
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+/* The screen sits inside the computer's lighter border. */
+:root[data-theme='boot'] body {
+  background: var(--c-boot-border);
+}
+:root[data-theme='boot'] #app {
+  padding: 10px;
+}
+:root[data-theme='boot'] #app > main {
+  background: var(--c-bg);
+}
+
+:root[data-theme='teletext'] {
+  --c-bg: #000000;
+  --c-surface: #000000;
+  --c-surface-2: #0000ff;
+  --c-surface-3: #0000c8;
+  --c-surface-hover: #0000a0;
+  --c-line: #00ffff;
+  --c-text: #ffffff;
+  --c-text-soft: #ffffff;
+  --c-text-muted: #00ffff;
+  --c-text-faint: #00b0b0;
+  --c-accent: #ffff00;
+  --c-accent-hover: #ffff80;
+  --c-on-accent: #000000;
+  --c-accent-text: #00ffff;
+  --c-accent-soft: #00007a;
+  --c-ok: #00ff00;
+  --c-ok-soft: #003300;
+  --c-ok-text: #00ff00;
+  --c-warn: #ffff00;
+  --c-warn-soft: #333300;
+  --c-danger: #ff0000;
+  --c-danger-text: #ff4040;
+  --c-danger-soft: #330000;
+  --c-folder: #ffff00;
+  --c-code-bg: #000000;
+  --c-code: #ffffff;
+  --c-syn-keyword: #ffff00;
+  --c-syn-string: #00ff00;
+  --c-syn-comment: #00ffff;
+  --c-syn-number: #ff00ff;
+  --c-syn-title: #ffff00;
+  --c-syn-attr: #00ffff;
+  --c-syn-meta: #ff4040;
+  --font-ui: 'VT323', ui-monospace, monospace;
+  --font-mono: 'VT323', ui-monospace, monospace;
+  --c-tt-black: #000000;
+  --c-tt-red: #ff4040;
+  --c-tt-green: #00ff00;
+  --c-tt-yellow: #ffff00;
+  --c-tt-blue: #0000ff;
+  --c-tt-magenta: #ff00ff;
+  --c-tt-cyan: #00ffff;
+  --c-tt-white: #ffffff;
+  --fs-xs: 14px;
+  --fs-sm: 16px;
+  --fs-md: 17px;
+  --fs-base: 18px;
+  --fs-lg: 19px;
+  --fs-xl: 20px;
+  --fs-2xl: 22px;
+  --fs-3xl: 36px;
+}
+:root[data-theme='teletext'] h1 {
+  color: var(--c-tt-yellow);
+  text-transform: uppercase;
+}
+:root[data-theme='teletext'] h2 {
+  color: var(--c-tt-cyan);
+}
+
+:root[data-theme='handheld'],
+:root[data-theme='gameboy'] {
+  color-scheme: light;
+  --c-bg: #9bbc0f;
+  --c-surface: #8bac0f;
+  --c-surface-2: #7a9b0e;
+  --c-surface-3: #6b8a0d;
+  --c-surface-hover: #5d7a0c;
+  --c-line: #306230;
+  --c-scrim: rgb(15 56 15 / 0.6);
+  --c-text: #0f380f;
+  --c-text-soft: #0f380f;
+  --c-text-muted: #306230;
+  --c-text-faint: #4a7a2a;
+  --c-accent: #306230;
+  --c-accent-hover: #0f380f;
+  --c-on-accent: #9bbc0f;
+  --c-accent-text: #0f380f;
+  --c-accent-soft: #8bac0f;
+  --c-ok: #0f380f;
+  --c-ok-soft: #8bac0f;
+  --c-ok-text: #0f380f;
+  --c-warn: #0f380f;
+  --c-warn-soft: #c4d94f;
+  --c-danger: #0f380f;
+  --c-danger-hover: #306230;
+  --c-danger-text: #0f380f;
+  --c-danger-soft: #c4d94f;
+  --c-lock: #306230;
+  --c-merged: #0f380f;
+  --c-merged-soft: #c4d94f;
+  --c-disabled-bg: #8bac0f;
+  --c-disabled-text: #4a7a2a;
+  --c-folder: #0f380f;
+  --c-code-bg: #0f380f;
+  --c-code: #9bbc0f;
+  --c-syn-keyword: #c4d94f;
+  --c-syn-string: #8bac0f;
+  --c-syn-comment: #6b8a0d;
+  --c-syn-number: #c4d94f;
+  --c-syn-title: #e0f08a;
+  --c-syn-attr: #b3d136;
+  --c-syn-meta: #c4d94f;
+  --c-add: #306230;
+  --c-add-soft: #c4d94f;
+  --c-del: #0f380f;
+  --c-del-soft: #8bac0f;
+  --font-ui: 'Press Start 2P', ui-monospace, monospace;
+  --font-mono: 'Press Start 2P', ui-monospace, monospace;
+  --section-icons: none;
+  --fs-xs: 8px;
+  --fs-sm: 9px;
+  --fs-md: 10px;
+  --fs-base: 11px;
+  --fs-lg: 11px;
+  --fs-xl: 12px;
+  --fs-2xl: 13px;
+  --fs-3xl: 20px;
+  --shadow-sheet: 0 0 0 3px #0f380f;
+  --shadow-dialog: 0 0 0 3px #0f380f;
+}
+:root[data-theme='handheld'] {
+  --r-sm: 2px;
+  --r-md: 4px;
+  --r-lg: 6px;
+  --r-xl: 6px;
+  --r-2xl: 8px;
+  --r-pill: 6px;
+}
+:root[data-theme='handheld'] h1,
+:root[data-theme='handheld'] h2,
+:root[data-theme='gameboy'] h1,
+:root[data-theme='gameboy'] h2 {
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+:root[data-theme='gameboy'] {
+  --c-shell: #c9c9c4;
+  --c-shell-groove: #b3b3ae;
+  --c-shell-print: #2b2c7a;
+  --c-shell-label: #6e6e74;
+  --c-shell-bezel: #555869;
+  --c-shell-bezel-print: #c9c9c4;
+  --c-shell-berry: #8b1e4a;
+  --c-shell-berry-shade: #5a0f2e;
+  --c-shell-pad: #2a2a2e;
+  --c-shell-pad-shade: #111114;
+  --c-shell-pad-print: #55555c;
+  --c-shell-pill: #8d8d93;
+  --c-shell-pill-shade: #66666b;
+  --c-shell-grille: #a6a6a1;
+  --c-shell-led: #ff3b30;
+  --font-shell: 'Archivo', system-ui, sans-serif;
+}
+
+:root[data-theme='workstation'] {
+  color-scheme: light;
+  --c-ws-desk: #555555;
+  --c-ws-face: #aaaaaa;
+  --c-ws-lit: #c8c8c8;
+  --c-ws-light: #ffffff;
+  --c-ws-shade: #555555;
+  --c-ws-dark: #000000;
+  --c-ws-title: #000000;
+  --c-ws-title-text: #ffffff;
+  --c-bg: #aaaaaa;
+  --c-surface: #b8b8b8;
+  --c-surface-2: #aaaaaa;
+  --c-surface-3: #999999;
+  --c-surface-hover: #c8c8c8;
+  --c-line: #555555;
+  --c-scrim: rgb(0 0 0 / 0.4);
+  --c-text: #000000;
+  --c-text-soft: #111111;
+  --c-text-muted: #333333;
+  --c-text-faint: #555555;
+  --c-accent: #000080;
+  --c-accent-hover: #1a1a9a;
+  --c-on-accent: #ffffff;
+  --c-accent-text: #000080;
+  --c-accent-soft: #c8c8e8;
+  --c-ok: #006400;
+  --c-ok-soft: #b8d8b8;
+  --c-ok-text: #004d00;
+  --c-warn: #7a4f00;
+  --c-warn-soft: #e6d7a0;
+  --c-danger: #aa0000;
+  --c-danger-hover: #c00000;
+  --c-danger-text: #8b0000;
+  --c-danger-soft: #e8c0c0;
+  --c-lock: #8a4a00;
+  --c-merged: #4b0082;
+  --c-merged-soft: #d8c8e8;
+  --c-disabled-bg: #b8b8b8;
+  --c-disabled-text: #6a6a6a;
+  --c-folder: #806000;
+  --c-code-bg: #000000;
+  --c-code: #ffffff;
+  --font-ui: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --shadow-sheet: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #555555, 0 0 0 1px #000000;
+  --shadow-dialog: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #555555, 0 0 0 1px #000000, 4px 4px 0 #000000;
+}
+:root[data-theme='workstation'] body {
+  background: var(--c-ws-desk);
+}
+:root[data-theme='workstation'] #app {
+  padding: 6px;
+}
+:root[data-theme='workstation'] #app > main {
+  border: 1px solid var(--c-ws-dark);
+  background: var(--c-bg);
+  box-shadow:
+    inset 1px 1px var(--c-ws-light),
+    inset -1px -1px var(--c-ws-shade);
+}
+:root[data-theme='workstation'] .btn {
+  box-shadow:
+    inset 1px 1px var(--c-ws-light),
+    inset -1px -1px var(--c-ws-dark),
+    inset -2px -2px var(--c-ws-shade);
+}
+:root[data-theme='workstation'] .btn:active {
+  box-shadow:
+    inset 1px 1px var(--c-ws-dark),
+    inset 2px 2px var(--c-ws-shade),
+    inset -1px -1px var(--c-ws-light);
+}
+
+:root[data-theme='vector'] {
+  --c-bg: #000000;
+  --c-surface: #000000;
+  --c-surface-2: #001414;
+  --c-surface-3: #002424;
+  --c-surface-hover: #003333;
+  --c-line: #2a8f92;
+  --c-text: #9ffcff;
+  --c-text-soft: #9ffcff;
+  --c-text-muted: #5fc8cc;
+  --c-text-faint: #2a8f92;
+  --c-accent: #9ffcff;
+  --c-accent-hover: #ffffff;
+  --c-on-accent: #000000;
+  --c-accent-text: #9ffcff;
+  --c-accent-soft: #002424;
+  --c-folder: #9ffcff;
+  --c-code-bg: #000000;
+  --c-code: #9ffcff;
+  --c-syn-keyword: #ffffff;
+  --c-syn-string: #c8feff;
+  --c-syn-comment: #3fb0b4;
+  --c-syn-number: #7fe0e3;
+  --c-syn-title: #e6ffff;
+  --c-syn-attr: #5fc8cc;
+  --c-syn-meta: #a8f0f2;
+  --font-ui: 'IBM Plex Mono', ui-monospace, monospace;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --shadow-sheet: 0 0 0 1px #9ffcff, 0 0 12px rgb(159 252 255 / 0.35);
+  --shadow-dialog: 0 0 0 1px #9ffcff, 0 0 18px rgb(159 252 255 / 0.4);
+}
+:root[data-theme='vector'] body {
+  text-shadow: 0 0 6px rgb(159 252 255 / 0.55);
+}
+:root[data-theme='vector']:not([data-terminal='theme']) .xterm {
+  text-shadow: none;
+}
+:root[data-theme='vector'] h1,
+:root[data-theme='vector'] h2 {
+  font-family: 'Major Mono Display', ui-monospace, monospace;
+  font-weight: 400;
+  text-transform: lowercase;
+}
+
+:root[data-theme='hacker'] {
+  --c-bg: #050505;
+  --c-surface: #0d0d10;
+  --c-surface-2: #141418;
+  --c-surface-3: #1c1c22;
+  --c-surface-hover: #2a2a30;
+  --c-line: #1c1c22;
+  --c-text: #e8e8e8;
+  --c-text-soft: #c8c8c8;
+  --c-text-muted: #7a7a80;
+  --c-text-faint: #4a4a50;
+  --c-accent: #ff2e4d;
+  --c-accent-hover: #ff5068;
+  --c-on-accent: #050505;
+  --c-accent-text: #2de2e6;
+  --c-accent-soft: #2a0a10;
+  --c-ok: #3dff8a;
+  --c-ok-soft: #0a2414;
+  --c-ok-text: #3dff8a;
+  --c-folder: #2de2e6;
+  --c-code-bg: #050505;
+  --c-code: #c8c8c8;
+  --c-syn-keyword: #ff2e4d;
+  --c-syn-string: #2de2e6;
+  --c-syn-comment: #5a5a62;
+  --c-syn-number: #ffd23f;
+  --c-syn-title: #ff85de;
+  --c-syn-attr: #3dff8a;
+  --c-syn-meta: #7aa0ff;
+  --font-ui: 'Fira Code', ui-monospace, monospace;
+  --font-mono: 'Fira Code', ui-monospace, monospace;
+}
+:root[data-theme='hacker'] h1 {
+  color: #ff2e4d;
+  text-shadow: -2px 0 rgb(45 226 230 / 0.75);
+}
+:root[data-theme='hacker'] .btn--primary {
+  font-weight: 700;
+}
+
+/* The ANSI colours are the 16 a
+   program picks by number; a theme without them keeps xterm's. The 8-bit
+   and pocket themes keep a plain mono face: their pixel fonts are too wide
+   for a terminal on a phone. */
+:root[data-terminal='theme'][data-theme='matrix'] {
+  --c-terminal: #000000;
+  --c-terminal-text: #00ff41;
+  --c-terminal-cursor: #00ff41;
+  --c-terminal-selection: rgb(0 255 65 / 0.3);
+  --font-terminal: 'Share Tech Mono', ui-monospace, monospace;
+  --c-ansi-black: #001a08;
+  --c-ansi-red: #00c832;
+  --c-ansi-green: #00ff41;
+  --c-ansi-yellow: #9dff57;
+  --c-ansi-blue: #00a82b;
+  --c-ansi-magenta: #00d93a;
+  --c-ansi-cyan: #5dff85;
+  --c-ansi-white: #b8ffcb;
+  --c-ansi-bright-black: #1fae47;
+  --c-ansi-bright-red: #3dff6e;
+  --c-ansi-bright-green: #7dffa0;
+  --c-ansi-bright-yellow: #c8ff9e;
+  --c-ansi-bright-blue: #00c832;
+  --c-ansi-bright-magenta: #4dff7a;
+  --c-ansi-bright-cyan: #9dffb8;
+  --c-ansi-bright-white: #e6ffec;
+}
+:root[data-terminal='theme'][data-theme='boot'] {
+  --c-terminal: #352879;
+  --c-terminal-text: #a99ff5;
+  --c-terminal-cursor: #a99ff5;
+  --c-terminal-selection: rgb(169 159 245 / 0.35);
+  --c-ansi-black: #000000;
+  --c-ansi-red: #e0705f;
+  --c-ansi-green: #9ad284;
+  --c-ansi-yellow: #edf171;
+  --c-ansi-blue: #a99ff5;
+  --c-ansi-magenta: #c46fd8;
+  --c-ansi-cyan: #8fe3ef;
+  --c-ansi-white: #d9d9d9;
+  --c-ansi-bright-black: #959595;
+  --c-ansi-bright-red: #ff9a8a;
+  --c-ansi-bright-green: #b8f09f;
+  --c-ansi-bright-yellow: #ffff9e;
+  --c-ansi-bright-blue: #c7c0ff;
+  --c-ansi-bright-magenta: #e09cf0;
+  --c-ansi-bright-cyan: #b8f3fa;
+  --c-ansi-bright-white: #ffffff;
+}
+:root[data-terminal='theme'][data-theme='teletext'] {
+  --c-terminal: #000000;
+  --c-terminal-text: #ffffff;
+  --c-terminal-cursor: #ffff00;
+  --c-terminal-selection: rgb(0 255 255 / 0.35);
+  /* Not VT323, the theme's own face: its "f" is half a cell wide, and
+     xterm's fix for that spreads whole runs of text past the grid. */
+  --font-terminal: 'Share Tech Mono', ui-monospace, monospace;
+  --c-ansi-black: #000000;
+  --c-ansi-red: #ff0000;
+  --c-ansi-green: #00ff00;
+  --c-ansi-yellow: #ffff00;
+  --c-ansi-blue: #5c5cff;
+  --c-ansi-magenta: #ff00ff;
+  --c-ansi-cyan: #00ffff;
+  --c-ansi-white: #ffffff;
+  --c-ansi-bright-black: #808080;
+  --c-ansi-bright-red: #ff4040;
+  --c-ansi-bright-green: #40ff40;
+  --c-ansi-bright-yellow: #ffff40;
+  --c-ansi-bright-blue: #8080ff;
+  --c-ansi-bright-magenta: #ff40ff;
+  --c-ansi-bright-cyan: #40ffff;
+  --c-ansi-bright-white: #ffffff;
+}
+:root[data-terminal='theme'][data-theme='handheld'] {
+  --c-terminal: #0f380f;
+  --c-terminal-text: #9bbc0f;
+  --c-terminal-cursor: #9bbc0f;
+  --c-terminal-selection: rgb(155 188 15 / 0.35);
+  --c-ansi-black: #0f380f;
+  --c-ansi-red: #8bac0f;
+  --c-ansi-green: #9bbc0f;
+  --c-ansi-yellow: #c4d94f;
+  --c-ansi-blue: #6b8a0d;
+  --c-ansi-magenta: #8bac0f;
+  --c-ansi-cyan: #a8c83a;
+  --c-ansi-white: #9bbc0f;
+  --c-ansi-bright-black: #4a7a2a;
+  --c-ansi-bright-red: #b3d136;
+  --c-ansi-bright-green: #c4d94f;
+  --c-ansi-bright-yellow: #e0f08a;
+  --c-ansi-bright-blue: #8bac0f;
+  --c-ansi-bright-magenta: #b3d136;
+  --c-ansi-bright-cyan: #d0e46a;
+  --c-ansi-bright-white: #e0f08a;
+}
+/* The Game Boy's screen is the light one: dark colours print, light ones
+   fade. */
+:root[data-terminal='theme'][data-theme='gameboy'] {
+  --c-terminal: #9bbc0f;
+  --c-terminal-text: #0f380f;
+  --c-terminal-cursor: #0f380f;
+  --c-terminal-selection: rgb(48 98 48 / 0.35);
+  --c-ansi-black: #0f380f;
+  --c-ansi-red: #306230;
+  --c-ansi-green: #306230;
+  --c-ansi-yellow: #306230;
+  --c-ansi-blue: #0f380f;
+  --c-ansi-magenta: #306230;
+  --c-ansi-cyan: #306230;
+  --c-ansi-white: #8bac0f;
+  --c-ansi-bright-black: #306230;
+  --c-ansi-bright-red: #0f380f;
+  --c-ansi-bright-green: #0f380f;
+  --c-ansi-bright-yellow: #306230;
+  --c-ansi-bright-blue: #0f380f;
+  --c-ansi-bright-magenta: #0f380f;
+  --c-ansi-bright-cyan: #306230;
+  --c-ansi-bright-white: #0f380f;
+}
+:root[data-terminal='theme'][data-theme='workstation'] {
+  --c-terminal: #000000;
+  --c-terminal-text: #e0e0e0;
+  --c-terminal-cursor: #e0e0e0;
+  --c-terminal-selection: rgb(170 170 170 / 0.4);
+  --font-terminal: 'IBM Plex Mono', ui-monospace, monospace;
+  --c-ansi-black: #000000;
+  --c-ansi-red: #aa0000;
+  --c-ansi-green: #00aa00;
+  --c-ansi-yellow: #aa5500;
+  --c-ansi-blue: #5555ff;
+  --c-ansi-magenta: #aa00aa;
+  --c-ansi-cyan: #00aaaa;
+  --c-ansi-white: #aaaaaa;
+  --c-ansi-bright-black: #555555;
+  --c-ansi-bright-red: #ff5555;
+  --c-ansi-bright-green: #55ff55;
+  --c-ansi-bright-yellow: #ffff55;
+  --c-ansi-bright-blue: #8888ff;
+  --c-ansi-bright-magenta: #ff55ff;
+  --c-ansi-bright-cyan: #55ffff;
+  --c-ansi-bright-white: #ffffff;
+}
+:root[data-terminal='theme'][data-theme='vector'] {
+  --c-terminal: #000000;
+  --c-terminal-text: #9ffcff;
+  --c-terminal-cursor: #9ffcff;
+  --c-terminal-selection: rgb(159 252 255 / 0.3);
+  --font-terminal: 'IBM Plex Mono', ui-monospace, monospace;
+  --c-ansi-black: #000000;
+  --c-ansi-red: #5fc8cc;
+  --c-ansi-green: #9ffcff;
+  --c-ansi-yellow: #c8feff;
+  --c-ansi-blue: #3fb0b4;
+  --c-ansi-magenta: #7fe0e3;
+  --c-ansi-cyan: #9ffcff;
+  --c-ansi-white: #c8feff;
+  --c-ansi-bright-black: #2a8f92;
+  --c-ansi-bright-red: #7fe0e3;
+  --c-ansi-bright-green: #c8feff;
+  --c-ansi-bright-yellow: #e6ffff;
+  --c-ansi-bright-blue: #5fc8cc;
+  --c-ansi-bright-magenta: #a8f0f2;
+  --c-ansi-bright-cyan: #c8feff;
+  --c-ansi-bright-white: #ffffff;
+}
+:root[data-terminal='theme'][data-theme='hacker'] {
+  --c-terminal: #050505;
+  --c-terminal-text: #e8e8e8;
+  --c-terminal-cursor: #ff2e4d;
+  --c-terminal-selection: rgb(45 226 230 / 0.3);
+  --font-terminal: 'Fira Code', ui-monospace, monospace;
+  --c-ansi-black: #050505;
+  --c-ansi-red: #ff2e4d;
+  --c-ansi-green: #3dff8a;
+  --c-ansi-yellow: #ffd23f;
+  --c-ansi-blue: #4d7cff;
+  --c-ansi-magenta: #ff4ecd;
+  --c-ansi-cyan: #2de2e6;
+  --c-ansi-white: #c8c8c8;
+  --c-ansi-bright-black: #5a5a62;
+  --c-ansi-bright-red: #ff5068;
+  --c-ansi-bright-green: #7dffb0;
+  --c-ansi-bright-yellow: #ffe27a;
+  --c-ansi-bright-blue: #7aa0ff;
+  --c-ansi-bright-magenta: #ff85de;
+  --c-ansi-bright-cyan: #7df0f2;
+  --c-ansi-bright-white: #ffffff;
+}

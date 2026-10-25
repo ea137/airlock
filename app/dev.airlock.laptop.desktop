@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Airlock
+Comment=Let devices in, cut them off, and see what they did
+Exec=airlock-app
+Icon=dev.airlock.laptop
+Terminal=false
+Categories=Network;Security;
+Keywords=phone;pairing;devices;tailscale;
+StartupWMClass=airlock-app
+SingleMainWindow=true

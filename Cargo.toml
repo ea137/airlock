@@ -1,0 +1,11 @@
+[workspace]
+members = ["hub", "app"]
+# The app needs the laptop UI built first (see build.sh); plain `cargo build`
+# and `cargo test` stick to the hub.
+default-members = ["hub"]
+resolver = "3"
+
+[workspace.package]
+edition = "2024"
+license = "MIT"
+publish = false

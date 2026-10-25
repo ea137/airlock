@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Airlock",
+  "version": "0.1.0",
+  "identifier": "dev.airlock.laptop",
+  "build": {
+    "frontendDist": "../ui/dist-laptop"
+  },
+  "app": {
+    "withGlobalTauri": false,
+    "windows": [
+      {
+        "label": "main",
+        "title": "Airlock",
+        "url": "laptop.html",
+        "width": 1000,
+        "height": 760,
+        "minWidth": 480,
+        "minHeight": 420,
+        "visible": false
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src ipc: http://ipc.localhost; base-uri 'none'; form-action 'none'",
+      "freezePrototype": false,
+      "capabilities": ["main"]
+    }
+  },
+  "bundle": {
+    "active": false,
+    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/icon.png"]
+  }
+}

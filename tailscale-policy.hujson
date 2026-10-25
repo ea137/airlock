@@ -1,0 +1,23 @@
+// Tailnet access policy, pasted into the admin console (Access controls).
+// LAPTOP_IP and TAILNET_USER are placeholders: ./policy.sh prints this file
+// filled in from ~/.config/airlock/policy.env.
+// Your server carries tag:server; tagged devices can't start connections.
+{
+    "tagOwners": {
+        "tag:server": ["autogroup:admin"],
+    },
+
+    "grants": [
+        // Your own devices (laptop, phone) can reach the server on any port,
+        {"src": ["autogroup:member"], "dst": ["tag:server"], "ip": ["*"]},
+        // but each other only on 443 (Airlock) and 8443 (Airlock's previews
+        // of dev servers).
+        {"src": ["autogroup:member"], "dst": ["autogroup:self"], "ip": ["tcp:443", "tcp:8443"]},
+    ],
+
+    "tests": [
+        {"src": "tag:server", "deny": ["${LAPTOP_IP}:443", "${LAPTOP_IP}:8443", "${LAPTOP_IP}:80", "${LAPTOP_IP}:22"]},
+        {"src": "${TAILNET_USER}", "accept": ["${LAPTOP_IP}:443", "${LAPTOP_IP}:8443"]},
+        {"src": "${TAILNET_USER}", "deny": ["${LAPTOP_IP}:22", "${LAPTOP_IP}:80", "${LAPTOP_IP}:6379", "${LAPTOP_IP}:5432"]},
+    ],
+}

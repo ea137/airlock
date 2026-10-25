@@ -1,0 +1,56 @@
+[package]
+name = "airlock"
+version = "0.1.0"
+description = "Airlock hub: the laptop-side service the phone and the laptop app talk to"
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lib]
+name = "airlock_hub"
+path = "src/lib.rs"
+
+[[bin]]
+name = "airlock"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0.104"
+base64 = "0.22.1"
+axum = { version = "0.8.9", features = ["ws"] }
+clap = { version = "4.6.7", features = ["derive"] }
+futures-util = "0.3.34"
+getrandom = "0.4.3"
+hex = "0.4.3"
+http-body-util = "0.1.5"
+hyper = { version = "1.12.0", features = ["client", "http1"] }
+hyper-util = { version = "0.1.21", features = ["tokio"] }
+libc = "0.2.190"
+mime_guess = "2.0.5"
+openssl = "0.10.81"
+pty-process = { version = "0.5.3", features = ["async"] }
+pulldown-cmark = { version = "0.13.4", default-features = false, features = ["html"] }
+reqwest = { version = "0.13.5", default-features = false, features = ["native-tls"] }
+rusqlite ={ version = "0.40.2", features = ["bundled"] }
+rust-embed = { version = "8.13.0", features = ["mime-guess"] }
+serde = { version = "1.0.229", features = ["derive"] }
+# preserve_order: Claude Code's settings keep their key order when the hooks
+# are added.
+serde_json = { version = "1.0.154", features = ["preserve_order"] }
+sha2 = "0.11.1"
+similar = "3.2.0"
+tokio = { version = "1.53.3", features = ["full"] }
+tokio-tungstenite = "0.30.0"
+toml = "1.1.8"
+# What the phone downloads, compressed: Tailscale Serve sends it as it is.
+tower-http = { version = "0.6.11", features = ["compression-br", "compression-gzip"] }
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
+vt100 = "0.16.2"
+webauthn-rs = "0.5.5"
+
+[dev-dependencies]
+tempfile = "3.27.0"
+tokio = { version = "1.53.3", features = ["full", "test-util"] }
+tower = { version = "0.5.3", features = ["util"] }
+webauthn-authenticator-rs = { version = "0.5.5", features = ["softpasskey"] }

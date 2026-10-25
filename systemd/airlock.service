@@ -1,0 +1,21 @@
+[Unit]
+Description=Airlock hub: the laptop side of the phone
+Documentation=https://github.com/ea137/airlock
+After=network-online.target
+
+[Service]
+ExecStart=%h/.local/bin/airlock serve
+Restart=on-failure
+RestartSec=2
+# Stopping the hub (an update, a crash) stops the hub alone. Its terminals'
+# tmux server is its child, and with the default every process it started
+# would go too: every terminal, and whatever ran in one (the update itself,
+# when run from a phone's terminal). The hub finds the server again when
+# it starts.
+KillMode=process
+Environment=RUST_LOG=info
+# No sandboxing here on purpose: the phone's terminals are your shells and
+# inherit this service's environment, sudo included.
+
+[Install]
+WantedBy=default.target
